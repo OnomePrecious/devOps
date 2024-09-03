@@ -10,10 +10,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>org.example</groupId>
-    <artifactId>devOpsTask</artifactId>
+    <artifactId>dev_opsTask</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>devOpsTask</name>
-    <description>devOpsTask</description>
+    <name>dev_opsTask</name>
+    <description>dev_opsTask</description>
     <url/>
     <licenses>
         <license/>
