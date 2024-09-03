@@ -1,0 +1,12 @@
+[33mb5be8ac[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mhello[m[33m)[m HEAD@{0}: checkout: moving from main to hello
+[33md1c1f1a[m[33m ([m[1;31morigin/main[m[33m, [m[1;32mmain[m[33m)[m HEAD@{1}: checkout: moving from hello to main
+[33mb5be8ac[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mhello[m[33m)[m HEAD@{2}: rebase (finish): returning to refs/heads/hello
+[33mb5be8ac[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mhello[m[33m)[m HEAD@{3}: rebase (pick): first commit
+[33m9258149[m HEAD@{4}: rebase (pick): first commit
+[33md1c1f1a[m[33m ([m[1;31morigin/main[m[33m, [m[1;32mmain[m[33m)[m HEAD@{5}: rebase (start): checkout refs/remotes/origin/main
+[33mcd5ff56[m[33m ([m[1;31morigin/hello[m[33m)[m HEAD@{6}: checkout: moving from master to hello
+[33m7a30822[m[33m ([m[1;32mmaster[m[33m)[m HEAD@{7}: commit: first commit
+[33mb8cba3b[m HEAD@{8}: checkout: moving from hello to master
+[33mcd5ff56[m[33m ([m[1;31morigin/hello[m[33m)[m HEAD@{9}: commit: first commit
+[33mb8cba3b[m HEAD@{10}: checkout: moving from master to hello
+[33mb8cba3b[m HEAD@{11}: commit (initial): first commit
