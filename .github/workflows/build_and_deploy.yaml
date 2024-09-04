@@ -41,16 +41,14 @@ jobs:
       - name: Push Docker image to Docker Hub
         run: docker push precious002/devops-app:latest
 
-      - name: Deploy to AWS
-        uses: aws-actions/amazon-ecs-deploy-action@v1
+      - name: upload deploy script
+        uses: actions/upload-artifact@v2
         with:
-          host: ${{ secrets.AWS_INSTANCE_IP }}
-          username: ${{ secrets.AWS_SSH_USER }}
-          key: ${{ secrets.AWS_SSH_KEY }}
-          port: 22
-          source: "deploy.sh"
-          target: "/tmp/deploy.sh"
+          name: deploy-script
+          path: deploy.sh
 
-      - name: Run deploy script
-        run: ssh -o StrictHostKeyChecking=no ${{ secrets.AWS_SSH_USER }}@${{ secrets.AWS_INSTANCE_IP }} 'bash /tmp/deploy.sh'
+      - name: Deploy to AWS EC2
+        run: |
+          scp -i ${{ secrets.AWS_SSH_KEY }} -o StrictHostKeyChecking=no deploy.sh ${{ secrets.AWS_SSH_USER }}@${{ secrets.AWS_INSTANCE_IP }}:/tmp/deploy.sh
+          ssh -i ${{ secrets.AWS_SSH_KEY }} -o StrictHostKeyChecking=no ${{ secrets.AWS_SSH_USER }}@${{ secrets.AWS_INSTANCE_IP }} 'bash /tmp/deploy.sh'
 
