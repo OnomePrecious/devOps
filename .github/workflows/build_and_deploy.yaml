@@ -3,7 +3,7 @@ name: Deploy Dockerhub
 on:
   push:
     branches:
-      - dev
+      - hello
 
 jobs:
   build-and-deploy:
@@ -36,7 +36,19 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Build Docker image
-        run: docker build -t precious002/my-app:latest .
+        run: docker build -t precious002/devops-app:latest .
 
       - name: Push Docker image to Docker Hub
-        run: docker push precious002/my-app:latest
+        run: docker push precious002/devops-app:latest
+
+      - name: upload deploy script
+        uses: actions/upload-artifact@v2
+        with:
+          name: deploy-script
+          path: deploy.sh
+
+      - name: Deploy to AWS EC2
+        run: |
+          scp -i ${{ secrets.AWS_SSH_KEY }} -o StrictHostKeyChecking=no deploy.sh ${{ secrets.AWS_SSH_USER }}@${{ secrets.AWS_INSTANCE_IP }}:/tmp/deploy.sh
+          ssh -i ${{ secrets.AWS_SSH_KEY }} -o StrictHostKeyChecking=no ${{ secrets.AWS_SSH_USER }}@${{ secrets.AWS_INSTANCE_IP }} 'bash /tmp/deploy.sh'
+
