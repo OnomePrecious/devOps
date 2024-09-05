@@ -48,7 +48,16 @@ jobs:
           path: deploy.sh
 
       - name: Deploy to AWS EC2
+        env:
+              AWS_PRIVATE_KEY: ${{ secrets.AWS_PRIVATE_KEY }}
+              AWS_HOST: ${{ secrets.AWS_HOST }}
         run: |
-          scp -i ${{ secrets.AWS_SSH_KEY }} -o StrictHostKeyChecking=no deploy.sh ${{ secrets.AWS_SSH_USER }}@${{ secrets.AWS_INSTANCE_IP }}:/tmp/deploy.sh
-          ssh -i ${{ secrets.AWS_SSH_KEY }} -o StrictHostKeyChecking=no ${{ secrets.AWS_SSH_USER }}@${{ secrets.AWS_INSTANCE_IP }} 'bash /tmp/deploy.sh'
-
+            echo "${{ secrets.AWS_PRIVATE_KEY }}" > private_key.pem
+            chmod 600 private_key.pem
+            ssh -o StrictHostKeyChecking=no -i private_key.pem ubuntu@${{ secrets.AWS_HOST }} << 'EOF'
+              sudo chmod 666 /var/run/docker.sock
+              docker pull precious002/devops-app:latest
+              docker stop devops-app || true
+              docker rm devops-app || true
+              docker run -d --name devops-app -p 8080:8080 precious002/devops-app:latest
+         EOF
